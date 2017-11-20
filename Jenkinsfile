@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('Initialize') {
       steps {
-        echo 'Minimal pipeline'
+        sh 'echo PEGA_HOME = $PEGA_HOME'
       }
     }
   }
