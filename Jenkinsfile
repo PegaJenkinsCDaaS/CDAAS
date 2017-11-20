@@ -3,7 +3,9 @@ pipeline {
   stages {
     stage('Initialize') {
       steps {
-        sh 'echo PEGA_HOME = $PEGA_HOME'
+        sh '''echo PEGA_HOME = $PEGA_HOME
+echo JENKINS_HOME = $JENKINS_HOME
+echo WORKSPACE = $WORKSPACE'''
       }
     }
   }
