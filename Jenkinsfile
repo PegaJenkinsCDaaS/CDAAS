@@ -13,6 +13,7 @@ echo WORKSPACE = $WORKSPACE'''
         stage('Run unit test') {
           steps {
             sh 'echo Gangadhar is working on it'
+            build 'Pega_Validation'
           }
         }
         stage('Check compliance') {
