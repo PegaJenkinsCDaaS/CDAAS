@@ -8,7 +8,7 @@ echo JENKINS_HOME = $JENKINS_HOME
 echo WORKSPACE = $WORKSPACE'''
       }
     }
-    stage('Run unit test') {
+    stage('Validation') {
       parallel {
         stage('Run unit test') {
           steps {
