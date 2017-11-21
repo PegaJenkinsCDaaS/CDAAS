@@ -12,8 +12,7 @@ echo WORKSPACE = $WORKSPACE'''
       parallel {
         stage('Run unit test') {
           steps {
-            sh 'echo Gangadhar is working on it'
-            build 'Pega_Validation'
+            build 'Run Unit Tests'
           }
         }
         stage('Check compliance') {
