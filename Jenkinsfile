@@ -31,6 +31,11 @@ echo WORKSPACE = $WORKSPACE'''
     stage('Export from DEV') {
       steps {
         echo 'Step for Exporting product file from DEV environment'
+        sh '''# Change the format of file to unix
+set fileformat=unix
+# Invoke PEGA utility to export product file
+$PEGA_HOME/scripts/utils/prpcServiceUtils.sh export --connPropFile $PEGA_HOME/scripts/utils/${SystemName}_export.properties --artifactsDir $WORKSPACE
+'''
       }
     }
     stage('Publish to Artifactory') {
