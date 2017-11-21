@@ -41,6 +41,7 @@ $PEGA_HOME/scripts/utils/prpcServiceUtils.sh export --connPropFile $PEGA_HOME/sc
     stage('Publish to Artifactory') {
       steps {
         echo 'Step to "Publish to Artifactory"'
+        build(propagate: true, job: 'Artifactory_Upload')
       }
     }
     stage('Fetch from Artifactory') {
