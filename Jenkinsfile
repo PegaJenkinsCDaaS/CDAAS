@@ -12,7 +12,7 @@ echo WORKSPACE = $WORKSPACE'''
       parallel {
         stage('Run unit test') {
           steps {
-            build 'Run Unit Tests'
+            build 'Run_Unit_Tests'
           }
         }
         stage('Check compliance') {
