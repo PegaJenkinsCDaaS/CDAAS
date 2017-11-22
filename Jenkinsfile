@@ -31,7 +31,7 @@ echo Value of mykey = ${mykey}'''
     }
     stage('Export from DEV') {
       steps {
-        build 'Pega_Export'
+        build(job: 'Pega_Export', propagate: true)
       }
     }
     stage('Publish to Artifactory') {
