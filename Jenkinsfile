@@ -29,7 +29,6 @@ echo WORKSPACE = $WORKSPACE'''
     }
     stage('Export from DEV') {
       steps {
-        echo 'Step for Exporting product file from DEV environment'
         build 'Pega_Export'
       }
     }
