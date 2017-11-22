@@ -3,9 +3,11 @@ pipeline {
   stages {
     stage('Initialize') {
       steps {
+        build(job: 'Initialise', wait: true)
         sh '''echo PEGA_HOME = $PEGA_HOME
 echo JENKINS_HOME = $JENKINS_HOME
-echo WORKSPACE = $WORKSPACE'''
+echo WORKSPACE = $WORKSPACE
+echo Value of mykey = ${mykey}'''
       }
     }
     stage('Validation') {
