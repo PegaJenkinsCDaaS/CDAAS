@@ -61,4 +61,7 @@ echo Value of mykey = ${mykey}'''
       }
     }
   }
+  environment {
+    EXPORT_BUILD_NUMBER = '$BUILD_NUMBER'
+  }
 }
