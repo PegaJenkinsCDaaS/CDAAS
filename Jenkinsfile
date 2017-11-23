@@ -20,7 +20,7 @@ pipeline {
         string(
           name:'Application_name_for_Export',
           defaultValue:'HRServices',
-          description: ''Name of application for Export)
+          description: 'Name of application for Export')
         string(
           name:'Application_version_for_Export',
           defaultValue:'01.01.01',
@@ -43,9 +43,9 @@ pipeline {
       steps {
         build(job: 'Initialise', wait: true)
         sh '''echo PEGA_HOME = $PEGA_HOME
-echo JENKINS_HOME = $JENKINS_HOME
-echo WORKSPACE = $WORKSPACE
-echo Value of mykey = ${mykey}'''
+          echo JENKINS_HOME = $JENKINS_HOME
+          echo WORKSPACE = $WORKSPACE
+          echo Value of mykey = ${mykey}'''
       }
     }
     stage('Validation') {
