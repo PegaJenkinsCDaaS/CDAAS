@@ -15,7 +15,7 @@ pipeline {
         
         build job: 'HelloWorld', 
           parameters: [
-            string(name: 'HelloWorldParam', value: ${params.DEV_Environment_URL})
+            string(name: 'HelloWorldParam', value: 'GodIsGreat')
           ]
 
       }
