@@ -12,7 +12,12 @@ pipeline {
         echo "Value of Username_for_Export: ${params.Username_for_Export}"
         echo "Value of Password_for_Export: ${params.Password_for_Export}"
         echo "Value of EmailId_for_Notification: ${params.EmailId_for_Notification}"
-        build(job: 'HelloWorld', parameters: [[$class: 'StringParameterValue', name: 'HelloWorldParam', value:  ${params.DEV_Environment_URL}]])
+        
+        build job: 'HelloWorld', 
+          parameters: [
+            string(name: 'HelloWorldParam', value: ${params.DEV_Environment_URL})
+          ]
+
       }
     }
     stage('Validation') {
