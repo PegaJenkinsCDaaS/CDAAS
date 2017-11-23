@@ -13,9 +13,8 @@ pipeline {
         echo "Value of Password_for_Export: ${params.Password_for_Export}"
         echo "Value of EmailId_for_Notification: ${params.EmailId_for_Notification}"
         sh '''echo PEGA_HOME = $PEGA_HOME
-          echo JENKINS_HOME = $JENKINS_HOME
-          echo WORKSPACE = $WORKSPACE
-          echo Value of mykey = ${mykey}'''
+echo JENKINS_HOME = $JENKINS_HOME
+echo WORKSPACE = $WORKSPACE'''
         build(job: 'HelloWorld', parameters: [[$class: 'StringParameterValue', name: 'HelloWorldParam', value:  ${params.DEV_Environment_URL}]])
       }
     }
