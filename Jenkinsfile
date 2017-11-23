@@ -15,7 +15,7 @@ pipeline {
         
         build job: 'HelloWorld', 
           parameters: [
-            string(name: 'HelloWorldParam', value: params.DEV_Environment_URL)
+            string(name: 'HelloWorldParam',   value: params.DEV_Environment_URL)
           ]
 
       }
@@ -24,12 +24,11 @@ pipeline {
       parallel {
         stage('Run unit test') {
           steps {
-            build 'Run_Unit_Tests'
             
             build job: 'Run_Unit_Tests', 
               parameters: [
-                string(name: 'DevelopmentURL', value: params.DEV_Environment_URL),
-                string(name: 'AccessGroup', value: params.AccessGroup_for_AUT)
+                string(name: 'DevelopmentURL',  value: params.DEV_Environment_URL),
+                string(name: 'AccessGroup',     value: params.AccessGroup_for_AUT)
                 ]
           }
         }
@@ -47,7 +46,17 @@ pipeline {
     }
     stage('Export from DEV') {
       steps {
-        build(job: 'Pega_Export', propagate: true)
+        build job: 'Pega_Export', 
+              parameters: [
+                string(name: 'productName',         value: params.DEV_Environment_URL),
+                string(name: 'productVersion',      value: params.ProductVersion_for_Export),
+                string(name: 'applicationName',     value: params.Application_name_for_Export),
+                string(name: 'applicationVersion',  value: params.Application_version_for_Export),
+                string(name: 'pegaSourceURL',       value: params.DEV_Environment_URL),
+                string(name: 'pegaSourceUser',      value: params.Username_for_Export),
+                string(name: 'pegaSourcePassword',  value: params.Password_for_Export),
+                string(name: 'emailRecipients',     value: params.EmailId_for_Notification),
+                ]
       }
     }
     stage('Publish to Artifactory') {
