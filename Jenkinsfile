@@ -25,6 +25,12 @@ pipeline {
         stage('Run unit test') {
           steps {
             build 'Run_Unit_Tests'
+            
+            build job: 'Run_Unit_Tests', 
+              parameters: [
+                string(name: 'DevelopmentURL', value: params.DEV_Environment_URL),
+                string(name: 'AccessGroup', value: params.AccessGroup_for_AUT)
+                ]
           }
         }
         stage('Check compliance') {
