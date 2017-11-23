@@ -17,7 +17,9 @@ pipeline {
           echo JENKINS_HOME = $JENKINS_HOME
           echo WORKSPACE = $WORKSPACE
           echo Value of mykey = ${mykey}'''
-        build(job: 'HelloWorld', propagate: true)
+        
+        build job: 'HelloWorld', parameters: [[$class: 'StringParameterValue', name: 'HelloWorldParam', value:  ${params.DEV_Environment_URL}]]
+      
       }
     }
     stage('Validation') {
