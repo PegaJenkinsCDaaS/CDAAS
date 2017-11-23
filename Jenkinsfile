@@ -41,6 +41,17 @@ pipeline {
   stages {
     stage('Initialize') {
       steps {
+        echo "Value of DEV_Environment_URL: ${params.DEV_Environment_URL}"
+        echo "Value of AccessGroup_for_AUT: ${params.AccessGroup_for_AUT}" 
+        echo "Value of ProductName_for_Export: ${params.ProductName_for_Export}"
+        echo "Value of ProductVersion_for_Export: ${params.ProductVersion_for_Export}"
+        echo "Value of Application_name_for_Export: ${params.Application_name_for_Export}"
+        echo "Value of Application_version_for_Export: ${params.Application_version_for_Export}"
+        echo "Value of Username_for_Export: ${params.Username_for_Export}"
+        echo "Value of Password_for_Export: ${params.Password_for_Export}"
+        echo "Value of EmailId_for_Notification: ${params.EmailId_for_Notification}"
+
+
         build(job: 'Initialise', wait: true)
         sh '''echo PEGA_HOME = $PEGA_HOME
           echo JENKINS_HOME = $JENKINS_HOME
