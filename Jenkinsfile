@@ -18,7 +18,10 @@ pipeline {
           echo WORKSPACE = $WORKSPACE
           echo Value of mykey = ${mykey}'''
         
-        build job: 'HelloWorld', parameters: [[$class: 'StringParameterValue', name: 'HelloWorldParam', value:  ${params.DEV_Environment_URL}]]
+        build job: 'HelloWorld', 
+            parameters: [
+              string(name: 'HelloWorldParam', value: ${params.DEV_Environment_URL})
+            ]
       
       }
     }
