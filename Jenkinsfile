@@ -75,10 +75,13 @@ pipeline {
         }
         stage('Publish to Artifactory') {
           steps {
-            echo 'Step to "Publish to Artifactory"'
-            build 'Artifactory_Upload'
+            build(job: 'Artifactory_Upload', parameters: [
+																																								                                                                             string(name: 'applicationName',     value: params.Application_name_for_Export),
+																			string(name: 'applicationVersion',  value: params.Application_version_for_Export),
+                                                                            string(name: 'emailRecipients',     value: params.EmailId_for_Notification),
+                                                                            ])
           }
-        }
+          }
         stage('Fetch from Artifactory') {
           steps {
             echo 'Step for Fetching zip file from Artifactory'
