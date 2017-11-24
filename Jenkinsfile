@@ -1,4 +1,16 @@
 pipeline {
+  parameters {
+        string(name: 'DEV_Environment_URL', defaultValue: 'http://34.235.52.21:8780', description: 'URL containing protocol, hostname and port number for Development environment')
+        string(name: 'AccessGroup_for_AUT', defaultValue: 'HRServices:Administrators', description: 'Access group used for Automated unit')
+        string(name: 'ProductName_for_Export', defaultValue: 'HRServices', description: 'Name of the Rule-Admin-Product rule to be used for Export from Development environment')
+        string(name: 'ProductVersion_for_Export', defaultValue: '01.01.02', description: 'Version number of the Product rule')
+        string(name: 'Application_name_for_Export', defaultValue: 'HRServices', description: 'Name of application for Export')
+        string(name: 'Application_version_for_Export', defaultValue: '01.01.01', description: 'Version number of application for Export')
+        string(name: 'Username_for_Export', defaultValue: 'ExportImport@HRServices', description: 'Pega operator id used for Export')
+        string(name: 'Password_for_Export', defaultValue: 'PegaCDaaS', description: 'Pega operator password used for Export')
+        string(name: 'EmailId_for_Notification', defaultValue: 'titto.t@hcl.com', description: 'Email address used to notify status of deployment')
+        string(name: 'Application_List_for_Validation', defaultValue: 'HCLEnterprise', description: 'Application List For Compliance Score Check')
+      }
   agent any
   stages {
     stage('Initialize') {
@@ -15,6 +27,7 @@ pipeline {
         echo "Value of Application List: ${params.Application_List_for_Validation}"
       }
     }
+	}
     stage('Validation') {
       parallel {
         stage('Run unit test') {
@@ -32,7 +45,7 @@ pipeline {
                                                                             string(name: 'pegaSourceURL',       value: params.DEV_Environment_URL),
                                                                             string(name: 'pegaSourceUser',      value: params.Username_for_Export),
                                                                             string(name: 'pegaSourcePassword',  value: params.Password_for_Export),
-                                                                            string(name: 'emailRecipients',     value: params.EmailId_for_Notification),
+                                                                            string(name: 'emailRecipients',     value: params.EmailId_for_Notification)
                                                                             ])
           }
             }
@@ -53,7 +66,7 @@ pipeline {
                                                                             string(name: 'pegaSourceURL',       value: params.DEV_Environment_URL),
                                                                             string(name: 'pegaSourceUser',      value: params.Username_for_Export),
                                                                             string(name: 'pegaSourcePassword',  value: params.Password_for_Export),
-                                                                            string(name: 'emailRecipients',     value: params.EmailId_for_Notification),
+                                                                            string(name: 'emailRecipients',     value: params.EmailId_for_Notification)
                                                                             ])
           }
         }
@@ -83,17 +96,5 @@ pipeline {
             echo 'Step to Deploy zip file to Production environment'
           }
         }
-      }
-      parameters {
-        string(name: 'DEV_Environment_URL', defaultValue: 'http://34.235.52.21:8780', description: 'URL containing protocol, hostname and port number for Development environment')
-        string(name: 'AccessGroup_for_AUT', defaultValue: 'HRServices:Administrators', description: 'Access group used for Automated unit')
-        string(name: 'ProductName_for_Export', defaultValue: 'HRServices', description: 'Name of the Rule-Admin-Product rule to be used for Export from Development environment')
-        string(name: 'ProductVersion_for_Export', defaultValue: '01.01.02', description: 'Version number of the Product rule')
-        string(name: 'Application_name_for_Export', defaultValue: 'HRServices', description: 'Name of application for Export')
-        string(name: 'Application_version_for_Export', defaultValue: '01.01.01', description: 'Version number of application for Export')
-        string(name: 'Username_for_Export', defaultValue: 'ExportImport@HRServices', description: 'Pega operator id used for Export')
-        string(name: 'Password_for_Export', defaultValue: 'PegaCDaaS', description: 'Pega operator password used for Export')
-        string(name: 'EmailId_for_Notification', defaultValue: 'titto.t@hcl.com', description: 'Email address used to notify status of deployment')
-        string(name: 'Application_List_for_Validation', defaultValue: 'HCLEnterprise', description: 'Application List For Compliance Score Check')
-      }
+      
     }
