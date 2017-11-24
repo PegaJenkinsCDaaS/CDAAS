@@ -48,7 +48,7 @@ pipeline {
                                                                             string(name: 'pegaSourceUser',      value: params.Username_for_Export),
                                                                             string(name: 'pegaSourcePassword',  value: params.Password_for_Export),
                                                                             string(name: 'emailRecipients',     value: params.EmailId_for_Notification),
-																			string(name: 'ComplianceThreshold'  value: params.Compliance_Threshold)
+																			string(name: 'ComplianceThreshold',  value: params.Compliance_Threshold)
                                                                             ])
             }
           }
