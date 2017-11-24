@@ -19,14 +19,15 @@ pipeline {
         stage('Run unit test') {
           steps {
             build(job: 'Run_Unit_Tests', parameters: [
-                                                          string(name: 'DevelopmentURL',  value: params.DEV_Environment_URL),
-                                                          string(name: 'AccessGroup',     value: params.AccessGroup_for_AUT)
-                                                          ])
+                                                                        string(name: 'DevelopmentURL',  value: params.DEV_Environment_URL),
+                                                                        string(name: 'AccessGroup',     value: params.AccessGroup_for_AUT)
+                                                                        ])
             }
           }
           stage('Check compliance') {
             steps {
               echo 'Step to Check compliance score'
+              build 'Check_Compliance_Score'
             }
           }
           stage('Regression tests') {
@@ -39,15 +40,15 @@ pipeline {
       stage('Export from DEV') {
         steps {
           build(job: 'Pega_Export', parameters: [
-                                                    string(name: 'productName',         value: params.ProductName_for_Export),
-                                                    string(name: 'productVersion',      value: params.ProductVersion_for_Export),
-                                                    string(name: 'applicationName',     value: params.Application_name_for_Export),
-                                                    string(name: 'applicationVersion',  value: params.Application_version_for_Export),
-                                                    string(name: 'pegaSourceURL',       value: params.DEV_Environment_URL),
-                                                    string(name: 'pegaSourceUser',      value: params.Username_for_Export),
-                                                    string(name: 'pegaSourcePassword',  value: params.Password_for_Export),
-                                                    string(name: 'emailRecipients',     value: params.EmailId_for_Notification),
-                                                    ])
+                                                                string(name: 'productName',         value: params.ProductName_for_Export),
+                                                                string(name: 'productVersion',      value: params.ProductVersion_for_Export),
+                                                                string(name: 'applicationName',     value: params.Application_name_for_Export),
+                                                                string(name: 'applicationVersion',  value: params.Application_version_for_Export),
+                                                                string(name: 'pegaSourceURL',       value: params.DEV_Environment_URL),
+                                                                string(name: 'pegaSourceUser',      value: params.Username_for_Export),
+                                                                string(name: 'pegaSourcePassword',  value: params.Password_for_Export),
+                                                                string(name: 'emailRecipients',     value: params.EmailId_for_Notification),
+                                                                ])
           }
         }
         stage('Publish to Artifactory') {
