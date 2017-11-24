@@ -43,7 +43,6 @@ pipeline {
             }
           }
         }
-      }
       stage('Export from DEV') {
         steps {
           build(job: 'Pega_Export', parameters: [
