@@ -12,7 +12,7 @@ pipeline {
         echo "Value of Username_for_Export: ${params.Username_for_Export}"
         echo "Value of Password_for_Export: ${params.Password_for_Export}"
         echo "Value of EmailId_for_Notification: ${params.EmailId_for_Notification}"
-        echo 'TEST TO BE REMOVED'
+        echo "Value of Application List: ${params.Application_List_for_Validation}"
       }
     }
     stage('Validation') {
@@ -27,8 +27,14 @@ pipeline {
           }
           stage('Check compliance') {
             steps {
-              echo 'Step to Check compliance score'
-              build 'Check_Compliance_Score'
+              build(job: 'Check_Compliance_Score', parameters: [
+                                                                           string(name: 'applicationList',  value: params.Application_List_for_Validation),
+                                                                            string(name: 'pegaSourceURL',       value: params.DEV_Environment_URL),
+                                                                            string(name: 'pegaSourceUser',      value: params.Username_for_Export),
+                                                                            string(name: 'pegaSourcePassword',  value: params.Password_for_Export),
+                                                                            string(name: 'emailRecipients',     value: params.EmailId_for_Notification),
+                                                                            ])
+          }
             }
           }
           stage('Regression tests') {
@@ -89,5 +95,6 @@ pipeline {
         string(name: 'Username_for_Export', defaultValue: 'ExportImport@HRServices', description: 'Pega operator id used for Export')
         string(name: 'Password_for_Export', defaultValue: 'PegaCDaaS', description: 'Pega operator password used for Export')
         string(name: 'EmailId_for_Notification', defaultValue: 'titto.t@hcl.com', description: 'Email address used to notify status of deployment')
+        string(name: 'Application_List_for_Validation', defaultValue: 'HCLEnterprise', description: 'Application List For Compliance Score Check')
       }
     }
