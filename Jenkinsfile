@@ -27,7 +27,7 @@ pipeline {
         echo "Value of Application List: ${params.Application_List_for_Validation}"
       }
     }
-	}
+	
     stage('Validation') {
       parallel {
         stage('Run unit test') {
@@ -96,5 +96,6 @@ pipeline {
             echo 'Step to Deploy zip file to Production environment'
           }
         }
+		}
       
     }
