@@ -83,7 +83,7 @@ pipeline {
             }
             stage('Fetch from Artifactory') {
               steps {
-                echo 'Step for Fetching zip file from Artifactory'
+                echo 'Step to fetch deployment archive from Artifactory'
               }
             }
             stage('Deploy to TEST') {
