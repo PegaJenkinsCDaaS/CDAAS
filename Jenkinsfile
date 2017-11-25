@@ -118,6 +118,7 @@ pipeline {
                                                               ])
               }
             }
+            EXTRA TEXT ADDED TO FAIL
             stage('Deploy to TEST') {
               steps {
                 echo 'Step to perform deployment to TEST environment'
