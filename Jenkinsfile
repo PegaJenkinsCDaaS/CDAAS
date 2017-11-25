@@ -93,6 +93,14 @@ pipeline {
                 }
                 echo 'Step to fetch deployment archive from Artifactory'
                 echo "Artifactory upload build number in Stage Fetch from Artifactory is : ${artifactoryUploadBuildNumber}"
+
+                build(job: 'Artifactory_Download', parameters: [
+                                                                      string(name: 'applicationName',               value: params.Application_name_for_Export),
+                                                                      string(name: 'applicationVersion',            value: params.Application_version_for_Export),
+                                                                      string(name: 'productVersion',                value: params.ProductVersion_for_Export),
+                                                                      string(name: 'downloadFilePattern',           value: 'pega_dev_cdaas/artifactory'),
+                                                                      string(name: 'artifactoryUploadBuildNumber',  value: ${artifactoryUploadBuildNumber})
+                                                              ])
               }
             }
             stage('Deploy to TEST') {
