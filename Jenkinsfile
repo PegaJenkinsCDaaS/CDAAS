@@ -80,7 +80,8 @@ pipeline {
                                                 																	string(name: 'applicationVersion',  value: params.Application_version_for_Export),
                                                                                   string(name: 'emailRecipients',     value: params.EmailId_for_Notification),
                                                                               ])
-              
+                
+                echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
                 sh 'echo USE_ARTIFACTORY_BUILD_NUMBER_HERE > artifactoryUploadBuildNumber.txt'
                 script {
                   artifactoryUploadBuildNumber = readFile('artifactoryUploadBuildNumber.txt').trim()
