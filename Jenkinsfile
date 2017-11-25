@@ -14,21 +14,10 @@ pipeline {
         echo "Value of EmailId_for_Notification: ${params.EmailId_for_Notification}"
         echo "Value of Application List: ${params.Application_List_for_Validation}"
         echo "Value of Application List: ${params.Compliance_Threshold}"
-
-        mail(subject: "Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}) started", 
-          body: """<p>STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
-            <p>Check console output at "<a href="${env.BUILD_URL}">${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>"</p>""", 
-          from: 'pegacdaas@jenkins.com', 
-          replyTo: params.EmailId_for_Notification, 
-          to: params.EmailId_for_Notification
-        )
-emailext (
-      subject: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
-      body: """<p>STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
-        <p>Check console output at "<a href="${env.BUILD_URL}">${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>"</p>""",
-      recipientProviders: [[$class: 'DevelopersRecipientProvider']]
-    )
-
+        mail(subject: "Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}) started", body: """<p>STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
+                    <p>Check console output at "<a href="${env.BUILD_URL}">${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>"</p>""", from: 'pegacdaas@jenkins.com', replyTo: params.EmailId_for_Notification, to: params.EmailId_for_Notification)
+        emailext(subject: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'", body: """<p>STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
+                <p>Check console output at "<a href="${env.BUILD_URL}">${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>"</p>""", recipientProviders: [[$class: 'DevelopersRecipientProvider']])
       }
     }
     stage('Validation') {
@@ -36,21 +25,21 @@ emailext (
         stage('Run unit test') {
           steps {
             build(job: 'Run_Unit_Tests', parameters: [
-                                                          string(name: 'DevelopmentURL',  value: params.DEV_Environment_URL),
-                                                          string(name: 'AccessGroup',     value: params.AccessGroup_for_AUT)
-                                                      ])
+                                                                        string(name: 'DevelopmentURL',  value: params.DEV_Environment_URL),
+                                                                        string(name: 'AccessGroup',     value: params.AccessGroup_for_AUT)
+                                                                    ])
             }
           }
           stage('Check compliance') {
             steps {
               build(job: 'Check_Compliance_Score', parameters: [
-                                                                      string(name: 'applicationList',  value: params.Application_List_for_Validation),
-                                                                      string(name: 'pegaSourceURL',       value: params.DEV_Environment_URL),
-                                                                      string(name: 'pegaSourceUser',      value: params.Username_for_Export),
-                                                                      string(name: 'pegaSourcePassword',  value: params.Password_for_Export),
-                                                                      string(name: 'emailRecipients',     value: params.EmailId_for_Notification),
-                                																			string(name: 'ComplianceThreshold',  value: params.Compliance_Threshold)
-                                                                    ])
+                                                                                      string(name: 'applicationList',  value: params.Application_List_for_Validation),
+                                                                                      string(name: 'pegaSourceURL',       value: params.DEV_Environment_URL),
+                                                                                      string(name: 'pegaSourceUser',      value: params.Username_for_Export),
+                                                                                      string(name: 'pegaSourcePassword',  value: params.Password_for_Export),
+                                                                                      string(name: 'emailRecipients',     value: params.EmailId_for_Notification),
+                                                																			string(name: 'ComplianceThreshold',  value: params.Compliance_Threshold)
+                                                                                    ])
               }
             }
             stage('Regression tests') {
@@ -63,24 +52,24 @@ emailext (
         stage('Export from DEV') {
           steps {
             build(job: 'Pega_Export', parameters: [
-                                                        string(name: 'productName',         value: params.ProductName_for_Export),
-                                                        string(name: 'productVersion',      value: params.ProductVersion_for_Export),
-                                                        string(name: 'applicationName',     value: params.Application_name_for_Export),
-                                                        string(name: 'applicationVersion',  value: params.Application_version_for_Export),
-                                                        string(name: 'pegaSourceURL',       value: params.DEV_Environment_URL),
-                                                        string(name: 'pegaSourceUser',      value: params.Username_for_Export),
-                                                        string(name: 'pegaSourcePassword',  value: params.Password_for_Export),
-                                                        string(name: 'emailRecipients',     value: params.EmailId_for_Notification),
-                                                    ])
+                                                                      string(name: 'productName',         value: params.ProductName_for_Export),
+                                                                      string(name: 'productVersion',      value: params.ProductVersion_for_Export),
+                                                                      string(name: 'applicationName',     value: params.Application_name_for_Export),
+                                                                      string(name: 'applicationVersion',  value: params.Application_version_for_Export),
+                                                                      string(name: 'pegaSourceURL',       value: params.DEV_Environment_URL),
+                                                                      string(name: 'pegaSourceUser',      value: params.Username_for_Export),
+                                                                      string(name: 'pegaSourcePassword',  value: params.Password_for_Export),
+                                                                      string(name: 'emailRecipients',     value: params.EmailId_for_Notification),
+                                                                  ])
             }
           }
           stage('Publish to Artifactory') {
             steps {
               build(job: 'Artifactory_Upload', parameters: [
-                                																	string(name: 'applicationName',     value: params.Application_name_for_Export),
-                                																	string(name: 'applicationVersion',  value: params.Application_version_for_Export),
-                                                                  string(name: 'emailRecipients',     value: params.EmailId_for_Notification),
-                                                              ])
+                                                																	string(name: 'applicationName',     value: params.Application_name_for_Export),
+                                                																	string(name: 'applicationVersion',  value: params.Application_version_for_Export),
+                                                                                  string(name: 'emailRecipients',     value: params.EmailId_for_Notification),
+                                                                              ])
               }
             }
             stage('Fetch from Artifactory') {
@@ -101,6 +90,11 @@ emailext (
             stage('Deploy to PROD') {
               steps {
                 build 'Pega_Import_Prod'
+              }
+            }
+            stage('Finalize') {
+              steps {
+                echo 'Step to notify and perform cleanup tasks'
               }
             }
           }
