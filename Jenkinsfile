@@ -33,7 +33,7 @@ pipeline {
         echo "Value of Application List: ${params.Compliance_Threshold}"
         
         mail(
-          subject: "Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}) started", body: """STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':Check console output at "<a href="${env.BUILD_URL}">${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>"""", 
+          subject: "Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}) started", body: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]': Check console output at "<a href="${env.BUILD_URL}">${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>"", 
           from: 'pegacdaas@jenkins.com', 
           replyTo: params.EmailId_for_Notification, 
           to: params.EmailId_for_Notification
@@ -140,7 +140,7 @@ pipeline {
               steps {
                 echo 'Step to notify and perform cleanup tasks'
                 mail(
-                  subject: "Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}) completed", body: """ENDED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]': Check console output at "<a href="${env.BUILD_URL}">${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>"""", 
+                  subject: "Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}) completed", body: """<p>ENDED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p><p>Check console output at "<a href="${env.BUILD_URL}">${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>"</p>""", 
                   from: 'pegacdaas@jenkins.com', 
                   replyTo: params.EmailId_for_Notification, 
                   to: params.EmailId_for_Notification
@@ -153,7 +153,7 @@ pipeline {
         
         failure {
             mail(
-                  subject: "Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}) failed", body: """FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':Check console output at "<a href="${env.BUILD_URL}">${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>"""", 
+                  subject: "Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}) failed", body: """<p>FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p><p>Check console output at "<a href="${env.BUILD_URL}">${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>"</p>""", 
                   from: 'pegacdaas@jenkins.com', 
                   replyTo: params.EmailId_for_Notification, 
                   to: params.EmailId_for_Notification
