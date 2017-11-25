@@ -99,7 +99,7 @@ pipeline {
                                                                       string(name: 'applicationVersion',            value: params.Application_version_for_Export),
                                                                       string(name: 'productVersion',                value: params.ProductVersion_for_Export),
                                                                       string(name: 'downloadFilePattern',           value: 'pega_dev_cdaas/artifactory'),
-                                                                      string(name: 'artifactoryUploadBuildNumber',  value: ${artifactoryUploadBuildNumber})
+                                                                      string(name: 'artifactoryUploadBuildNumber',  value: '${artifactoryUploadBuildNumber}')
                                                               ])
               }
             }
