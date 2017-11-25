@@ -88,8 +88,7 @@ pipeline {
               steps {
 
               script {
-                  artifactoryUploadBuildNumber = ""
-                  artifactoryUploadBuildNumber = readFile('${env.WORKSPACE}/Artifactory_Upload/artifactoryUploadBuildNumber.txt').trim()
+                  artifactoryUploadBuildNumber = readFile("'${env.WORKSPACE}'/Artifactory_Upload/artifactoryUploadBuildNumber.txt").trim()
                 }
                 echo 'Step to fetch deployment archive from Artifactory'
                 echo "Artifactory upload build number in Stage Fetch from Artifactory is : ${artifactoryUploadBuildNumber}"
