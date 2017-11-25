@@ -16,11 +16,19 @@ pipeline {
         echo "Value of Application List: ${params.Compliance_Threshold}"
 
         mail(subject: "Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}) started", 
-          body: "Parameters DEV_Environment_URL: ${params.DEV_Environment_URL}", 
+          body: """<p>STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
+            <p>Check console output at "<a href="${env.BUILD_URL}">${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>"</p>""", 
           from: 'pegacdaas@jenkins.com', 
           replyTo: 'titto.t@hcl.com', 
           to: 'titto.t@hcl.com'
         )
+emailext (
+      subject: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+      body: """<p>STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
+        <p>Check console output at "<a href="${env.BUILD_URL}">${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>"</p>""",
+      recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+    )
+
       }
     }
     stage('Validation') {
