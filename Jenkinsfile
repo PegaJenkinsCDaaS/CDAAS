@@ -2,8 +2,6 @@ pipeline {
   agent any
   stages {
 
-    def artifactoryUploadBuildNumber=''
-
     stage('Initialize') {
       steps {
         echo 'Step to perform initialisation'
@@ -83,12 +81,17 @@ pipeline {
                                                                                   string(name: 'emailRecipients',     value: params.EmailId_for_Notification),
                                                                               ])
               }
-              artifactoryUploadBuildNumber=${env.BUILD_NUMBER}
+              
+              sh 'echo ${env.BUILD_NUMBER} > artifactoryUploadBuildNumber.txt'
+              script {
+                artifactoryUploadBuildNumber = radFile('artifactoryUploadBuildNumber.txt').trim()
+              }
+              echo "Artifactory upload build number in Stage Publish to Artifactory is : ${artifactoryUploadBuildNumber}"
             }
             stage('Fetch from Artifactory') {
               steps {
                 echo 'Step to fetch deployment archive from Artifactory'
-                echo "Artifactory upload build number is : ${artifactoryUploadBuildNumber}"
+                echo "Artifactory upload build number in Stage Fetch from Artifactory is : ${artifactoryUploadBuildNumber}"
               }
             }
             stage('Deploy to TEST') {
