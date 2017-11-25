@@ -114,7 +114,7 @@ pipeline {
                                                                       string(name: 'applicationVersion',            value: params.Application_version_for_Export),
                                                                       string(name: 'productVersion',                value: params.ProductVersion_for_Export),
                                                                       string(name: 'downloadFilePattern',           value: 'pega_dev_cdaas/artifactory'),
-                                                                      string(name: 'artifactoryUploadBuildNumber',  value: ${artifactoryUploadBuildNumber})
+                                                                      string(name: 'artifactoryUploadBuildNumber',  value: "${artifactoryUploadBuildNumber}")
                                                               ])
               }
             }
@@ -150,17 +150,4 @@ pipeline {
             }
 
       }//End stages
-      post {
-        
-        failure {
-            mail(
-                  subject: "Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}) failed", body: """<p>FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p><p>Check console output at "<a href="${env.BUILD_URL}">${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>"</p>""", 
-                  from: 'pegacdaas@jenkins.com', 
-                  replyTo: params.EmailId_for_Notification, 
-                  to: params.EmailId_for_Notification
-                )
-        }
-    }
-
-          
 }//End pipeline
