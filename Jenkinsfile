@@ -1,7 +1,7 @@
 pipeline {
   agent any
 
-  def artifactoryUploadBuildNumber=""
+  def artifactoryUploadBuildNumber=''
   
   stages {
     stage('Initialize') {
@@ -88,7 +88,7 @@ pipeline {
             stage('Fetch from Artifactory') {
               steps {
                 echo 'Step to fetch deployment archive from Artifactory'
-                echo '${artifactoryUploadBuildNumber}'
+                echo "Artifactory upload build number is : ${artifactoryUploadBuildNumber}"
               }
             }
             stage('Deploy to TEST') {
