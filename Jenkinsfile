@@ -81,7 +81,7 @@ pipeline {
                                                                                   string(name: 'emailRecipients',     value: params.EmailId_for_Notification),
                                                                               ])
               
-                sh 'echo params.Application_name_for_Export > artifactoryUploadBuildNumber.txt'
+                sh 'echo "${env.BUILD_NUMBER}" > artifactoryUploadBuildNumber.txt'
                 script {
                   artifactoryUploadBuildNumber = readFile('artifactoryUploadBuildNumber.txt').trim()
                 }
