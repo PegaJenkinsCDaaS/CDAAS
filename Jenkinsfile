@@ -14,7 +14,13 @@ pipeline {
         echo "Value of EmailId_for_Notification: ${params.EmailId_for_Notification}"
         echo "Value of Application List: ${params.Application_List_for_Validation}"
         echo "Value of Application List: ${params.Compliance_Threshold}"
-        mail(subject: 'Jenkins pipeline job started', body: 'Some body text', from: 'pegacdaas@jenkins.com', replyTo: 'titto.t@hcl.com', to: 'titto.t@hcl.com')
+
+        mail(subject: "Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}) started", 
+          body: "Parameters DEV_Environment_URL: ${params.DEV_Environment_URL}", 
+          from: 'pegacdaas@jenkins.com', 
+          replyTo: 'titto.t@hcl.com', 
+          to: 'titto.t@hcl.com'
+        )
       }
     }
     stage('Validation') {
