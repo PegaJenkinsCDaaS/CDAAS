@@ -3,6 +3,7 @@ pipeline {
   stages {
     stage('Initialize') {
       steps {
+        echo 'Step to perform initialisation'
         echo "Value of DEV_Environment_URL: ${params.DEV_Environment_URL}"
         echo "Value of AccessGroup_for_AUT: ${params.AccessGroup_for_AUT}"
         echo "Value of ProductName_for_Export: ${params.ProductName_for_Export}"
@@ -28,6 +29,7 @@ pipeline {
       parallel {
         stage('Run unit test') {
           steps {
+            echo 'Step to execute PEGA Automated Unit Tests'
             build(job: 'Run_Unit_Tests', parameters: [
                                                                         string(name: 'DevelopmentURL',  value: params.DEV_Environment_URL),
                                                                         string(name: 'AccessGroup',     value: params.AccessGroup_for_AUT)
@@ -36,6 +38,7 @@ pipeline {
           }
           stage('Check compliance') {
             steps {
+              echo 'Step to check compliance score of the application used for deployment'
               build(job: 'Check_Compliance_Score', parameters: [
                                                                                       string(name: 'applicationList',  value: params.Application_List_for_Validation),
                                                                                       string(name: 'pegaSourceURL',       value: params.DEV_Environment_URL),
@@ -48,13 +51,14 @@ pipeline {
             }
             stage('Regression tests') {
               steps {
-                echo 'Step to execute "Run Selenium tests"'
+                echo 'Step to execute Selenium tests'
               }
             }
           }
         }
         stage('Export from DEV') {
           steps {
+            echo 'Step to export deployment archive from DEV environment'
             build(job: 'Pega_Export', parameters: [
                                                                       string(name: 'productName',         value: params.ProductName_for_Export),
                                                                       string(name: 'productVersion',      value: params.ProductVersion_for_Export),
@@ -69,6 +73,7 @@ pipeline {
           }
           stage('Publish to Artifactory') {
             steps {
+              echo 'Step to upload deployment archive to Artifactory'
               build(job: 'Artifactory_Upload', parameters: [
                                                 																	string(name: 'applicationName',     value: params.Application_name_for_Export),
                                                 																	string(name: 'applicationVersion',  value: params.Application_version_for_Export),
@@ -83,16 +88,19 @@ pipeline {
             }
             stage('Deploy to TEST') {
               steps {
+                echo 'Step to perform deployment to TEST environment'
                 build 'Pega_Import_Test'
               }
             }
             stage('Deploy to ACC') {
               steps {
+                echo 'Step to perform deployment to Acceptance environment'
                 build 'Pega_Import_Acceptance'
               }
             }
             stage('Deploy to PROD') {
               steps {
+                echo 'Step to perform deployment to Production environment'
                 build 'Pega_Import_Prod'
               }
             }
