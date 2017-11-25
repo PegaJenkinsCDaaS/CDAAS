@@ -1,9 +1,9 @@
 pipeline {
   agent any
-
-  def artifactoryUploadBuildNumber=''
-  
   stages {
+
+    def artifactoryUploadBuildNumber=''
+
     stage('Initialize') {
       steps {
         echo 'Step to perform initialisation'
