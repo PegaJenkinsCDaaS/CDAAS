@@ -1,5 +1,8 @@
 pipeline {
   agent any
+
+  def artifactoryUploadBuildNumber=""
+  
   stages {
     stage('Initialize') {
       steps {
@@ -80,10 +83,12 @@ pipeline {
                                                                                   string(name: 'emailRecipients',     value: params.EmailId_for_Notification),
                                                                               ])
               }
+              artifactoryUploadBuildNumber=${env.BUILD_NUMBER}
             }
             stage('Fetch from Artifactory') {
               steps {
                 echo 'Step to fetch deployment archive from Artifactory'
+                echo '${artifactoryUploadBuildNumber}'
               }
             }
             stage('Deploy to TEST') {
