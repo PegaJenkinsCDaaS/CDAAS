@@ -88,7 +88,8 @@ pipeline {
               steps {
 
               script {
-                  artifactoryUploadBuildNumber = readFile("'${env.WORKSPACE}'/Artifactory_Upload/artifactoryUploadBuildNumber.txt").trim()
+                  // TODO - Remove hardcoded folder path from below statement
+                  artifactoryUploadBuildNumber = readFile('/var/lib/jenkins/workspace/Artifactory_Upload/artifactoryUploadBuildNumber.txt').trim()
                 }
                 echo 'Step to fetch deployment archive from Artifactory'
                 echo "Artifactory upload build number in Stage Fetch from Artifactory is : ${artifactoryUploadBuildNumber}"
