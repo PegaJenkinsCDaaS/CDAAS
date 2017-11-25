@@ -19,8 +19,8 @@ pipeline {
           body: """<p>STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
             <p>Check console output at "<a href="${env.BUILD_URL}">${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>"</p>""", 
           from: 'pegacdaas@jenkins.com', 
-          replyTo: 'titto.t@hcl.com', 
-          to: 'titto.t@hcl.com'
+          replyTo: params.EmailId_for_Notification, 
+          to: params.EmailId_for_Notification
         )
 emailext (
       subject: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
