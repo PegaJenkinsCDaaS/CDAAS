@@ -38,6 +38,7 @@ pipeline {
           replyTo: params.EmailId_for_Notification, 
           to: params.EmailId_for_Notification
         )
+        slackSend channel: "#pegcdaas", message: "Build Started: ${env.JOB_NAME} ${env.BUILD_NUMBER}"
         
       }
     }
