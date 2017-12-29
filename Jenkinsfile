@@ -1,10 +1,6 @@
 pipeline {
   agent any
-    parameters {
-              string(name: 'DEV_Environment_URL', defaultValue: 'http://34.235.52.21:8780', description: 'URL containing protocol, hostname and port number for Development environment')
-              string(name: 'AccessGroup_for_AUT', defaultValue: 'HRServices:Administrators', description: 'Access group used for Automated unit')
-            }
-  stages {
+   stages {
     stage('Initialize') {
       steps {
         echo 'Step to perform initialisation'
@@ -30,7 +26,7 @@ pipeline {
           steps {
             echo 'Step to execute PEGA Automated Unit Tests'
            
-            sh('curl -X POST "$params.DEV_Environment_URL"/prweb/PRRestService/PegaUnit/Rule-Test-Unit-Case/pzExecuteTests?AccessGroup:"$params.AccessGroup_for_AUT"')
+            sh('curl -X POST http://34.235.52.21:8780/prweb/PRRestService/PegaUnit/Rule-Test-Unit-Case/pzExecuteTests?AccessGroup:HRServices:Administrators')
             }
           }
           stage('Check compliance') {
