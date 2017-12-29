@@ -25,7 +25,7 @@ pipeline {
         stage('Run unit test') {
           steps {
             echo 'Step to execute PEGA Automated Unit Tests'
-            sh('curl -X POST http://34.235.52.21:8780/prweb/PRRestService/PegaUnit/Rule-Test-Unit-Case/pzExecuteTests?AccessGroup:HRServices:Administrators')
+            sh('curl -X POST params.DEV_Environment_URL/prweb/PRRestService/PegaUnit/Rule-Test-Unit-Case/pzExecuteTests?AccessGroup:params.AccessGroup_for_AUT')
             }
           }
           stage('Check compliance') {
