@@ -12,6 +12,7 @@ pipeline {
               string(name: 'EmailId_for_Notification', defaultValue: 'titto.t@hcl.com', description: 'Email address used to notify status of deployment')
               string(name: 'Application_List_for_Validation', defaultValue: 'HCLEnterprise', description: 'Application List For Compliance Score Check')
               string(name: 'Compliance_Threshold', defaultValue: '90', description: 'Compliance Threshold for an Application')
+   }
   stages {
     stage('Initialize') {
       steps {
