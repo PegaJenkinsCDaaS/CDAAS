@@ -24,11 +24,13 @@ pipeline {
         stage('Run unit test') {
           steps {
             echo 'Step to execute PEGA Automated Unit Tests'
-            build(job: 'Run_Unit_Tests', parameters: [
-                                                                                                    string(name: 'DevelopmentURL',  value: params.DEV_Environment_URL),
-                                                                                                    string(name: 'AccessGroup',     value: params.AccessGroup_for_AUT)
-                                                                                                ])
-            }
+           curl -X GET parameters {
+                    string(name: 'DEV_Environment_URL', defaultValue: 'http://34.235.52.21:8780', description: 'URL containing protocol, hostname and port number for Development environment')}/prweb/PRRestService/PegaUnit/Rule-Test-Unit-Case/pzExecuteTests?AccessGroup= parameters {
+                    
+                    string(name: 'AccessGroup', defaultValue: 'HRServices:Administrators', description: 'Access group used for Automated unit')
+
+}
+
           }
           stage('Check compliance') {
             steps {
