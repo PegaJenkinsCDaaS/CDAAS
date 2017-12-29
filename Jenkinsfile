@@ -167,4 +167,5 @@ pipeline {
                     string(name: 'Compliance_Threshold', defaultValue: '90', description: 'Compliance Threshold for an Application')
                   }
                 }
+}
 
