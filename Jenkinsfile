@@ -19,15 +19,22 @@ pipeline {
         slackSend(channel: 'pegacdaas', message: "Job: '${env.JOB_NAME}' with build number: '${env.BUILD_NUMBER}' started")
       }
     }
-    stage('Validation') {
-      parallel {
-        stage('Run unit test') {
-          steps {
+    stage('Validation') 
+    {
+      parallel 
+      {
+        stage('Run unit test') 
+        {
+          steps 
+          {
             echo 'Step to execute PEGA Automated Unit Tests'
            sh('curl -X POST http://34.235.52.21:8780/prweb/PRRestService/PegaUnit/Rule-Test-Unit-Case/pzExecuteTests?HRServices:Administrators')
 
           }
-          stage('Check compliance') {
+        }
+      }
+    }
+    stage('Check compliance') {
             steps {
               echo 'Step to check compliance score of the application used for deployment'
               build(job: 'Check_Compliance_Score', parameters: [
@@ -160,4 +167,4 @@ pipeline {
                     string(name: 'Compliance_Threshold', defaultValue: '90', description: 'Compliance Threshold for an Application')
                   }
                 }
-}
+
