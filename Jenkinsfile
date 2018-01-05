@@ -31,19 +31,7 @@ pipeline {
                                                       ])
             */
 
-            println 'All with double quotes'
-            println "curl -X POST http://34.235.52.21:8780/prweb/PRRestService/PegaUnit/Rule-Test-Unit-Case/pzExecuteTests?AccessGroup:HRServices:Administrators"
-
-            println 'All with single quotes'
-            println 'curl -X POST http://34.235.52.21:8780/prweb/PRRestService/PegaUnit/Rule-Test-Unit-Case/pzExecuteTests?AccessGroup:HRServices:Administrators'
-
-            println 'Double from outside with parameters'
-            println "curl -X POST ${params.DEV_Environment_URL}/prweb/PRRestService/PegaUnit/Rule-Test-Unit-Case/pzExecuteTests?${params.AccessGroup_for_AUT}"
-            println "curl -X POST $params.DEV_Environment_URL/prweb/PRRestService/PegaUnit/Rule-Test-Unit-Case/pzExecuteTests?$params.AccessGroup_for_AUT"
-
-
-           
-            sh("curl -X POST ${params.DEV_Environment_URL}/prweb/PRRestService/PegaUnit/Rule-Test-Unit-Case/pzExecuteTests?${params.AccessGroup_for_AUT}")
+            sh("curl -X POST ${params.DEV_Environment_URL}/prweb/PRRestService/PegaUnit/Rule-Test-Unit-Case/pzExecuteTests?${params.AccessGroup_for_AUT}" > AutomatedTestResult.txt)
            
             }
           }
