@@ -31,7 +31,7 @@ pipeline {
                                                       ])
             */
 
-            sh("curl -X POST ${params.DEV_Environment_URL}/prweb/PRRestService/PegaUnit/Rule-Test-Unit-Case/pzExecuteTests?${params.AccessGroup_for_AUT}" > AutomatedTestResult.txt)
+            sh("curl -X POST ${params.DEV_Environment_URL}/prweb/PRRestService/PegaUnit/Rule-Test-Unit-Case/pzExecuteTests?${params.AccessGroup_for_AUT}")
 
             def post = new URL("${params.DEV_Environment_URL}/prweb/PRRestService/PegaUnit/Rule-Test-Unit-Case/pzExecuteTests?${params.AccessGroup_for_AUT}").openConnection()
             post.setRequestMethod("POST")
