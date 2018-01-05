@@ -32,6 +32,14 @@ pipeline {
             */
 
             sh("curl -X POST ${params.DEV_Environment_URL}/prweb/PRRestService/PegaUnit/Rule-Test-Unit-Case/pzExecuteTests?${params.AccessGroup_for_AUT}" > AutomatedTestResult.txt)
+
+            def post = new URL("${params.DEV_Environment_URL}/prweb/PRRestService/PegaUnit/Rule-Test-Unit-Case/pzExecuteTests?${params.AccessGroup_for_AUT}").openConnection()
+            post.setRequestMethod("POST")
+            post.setDoOutput(true)
+            post.setRequestProperty("Content-Type", "application/json")
+            post.getOutputStream().write(message.getBytes("UTF-8"));
+            def postRC = post.getResponseCode();
+
            
             }
           }
