@@ -41,8 +41,10 @@ pipeline {
             println "curl -X POST params.DEV_Environment_URL/prweb/PRRestService/PegaUnit/Rule-Test-Unit-Case/pzExecuteTests?AccessGroup:HRServices:Administrators"
 
 
-            -- sh("curl -X POST http://34.235.52.21:8780/prweb/PRRestService/PegaUnit/Rule-Test-Unit-Case/pzExecuteTests?AccessGroup:HRServices:Administrators")
-
+            /*
+            sh("curl -X POST http://34.235.52.21:8780/prweb/PRRestService/PegaUnit/Rule-Test-Unit-Case/pzExecuteTests?AccessGroup:HRServices:Administrators")
+            */
+            
             }
           }
           stage('Check compliance') {
