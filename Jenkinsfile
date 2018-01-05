@@ -126,8 +126,8 @@ pipeline {
                 }
               }
               parameters {
-                string(name: 'DEV_Environment_URL', defaultValue: 'http://34.235.52.21:8780', description: 'URL containing protocol, hostname and port number for Development environment')
-                string(name: 'TST_Environment_URL', defaultValue: 'http://34.235.52.21:8790', description: 'URL containing protocol, hostname and port number for Test environment')
+                string(name: 'DEV_Environment_URL', defaultValue: 'http://34.208.33.131:8780', description: 'URL containing protocol, hostname and port number for Development environment')
+                string(name: 'TST_Environment_URL', defaultValue: 'http://34.208.33.131:8790', description: 'URL containing protocol, hostname and port number for Test environment')
                 string(name: 'ACC_Environment_URL', defaultValue: 'http://52.70.2.153:8780', description: 'URL containing protocol, hostname and port number for Acceptance environment')
                 string(name: 'PRD_Environment_URL', defaultValue: 'http://52.70.2.153:8790', description: 'URL containing protocol, hostname and port number for Production environment')
                 string(name: 'AccessGroup_for_AUT', defaultValue: 'HRServices:Administrators', description: 'Access group used for Automated unit')
