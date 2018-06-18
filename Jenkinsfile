@@ -20,19 +20,19 @@ pipeline {
       }
     }    
     stage('Checkout') {
-          steps ('Checkout Jenkinfile') {
-            echo 'Step to Checkout Jenkinfile'
+          steps{
+          	steps ('Checkout Jenkinfile') {
+            	echo 'Step to Checkout Jenkinfile'
+	          }
+          steps ('Checkout Build script') {
+            echo 'Step to Checkout Build script'
           }
-          //steps ('Checkout Build script') {
-            //echo 'Step to Checkout Build script'
-          //}
+        } 
     }
     stage('Validation') {      
-        stage('Unit tests') {
-          steps {
+        steps ('Unit test') {
             echo 'Step to execute Selenium tests'
           }
-      	}
     }
     stage('Export from DEV') {
       steps {
