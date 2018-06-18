@@ -30,18 +30,6 @@ pipeline {
           }
     }
     stage('Export from DEV') {
-    
-	  environment {
-			SystemName ="$BUILD_TAG"
-			ImportExistingInstances = "override"
-			SourceHost="http://ansiblepegaproj2.westeurope.cloudapp.azure.com"
-			SourceUser = "hbagalk"
-			SourcePassword = "rules"
-			TargetHost = "http://localhost:8080"
-			TargetUser = "hbagalk"
-			TargetPassword = "rules" 
-			JAVA_HOME = "/usr/lib/java-1.8.0"
-		}
       steps {
         echo 'Step to export deployment archive from DEV environment'
         build(job: 'Pega_Export', parameters: [
@@ -49,10 +37,9 @@ pipeline {
                                                   string(name: 'productVersion',      value: params.ProductVersion_for_Export),
                                                   string(name: 'applicationName',     value: params.Application_name_for_Export),
                                                   string(name: 'applicationVersion',  value: params.Application_version_for_Export),
-                                                  string(name: 'pegaSourceURL',       value: params.DEV_Environment_URL),
-                                                  string(name: 'pegaSourceUser',      value: params.Username_for_Export),
-                                                  string(name: 'pegaSourcePassword',  value: params.Password_for_Export),
-                                                  string(name: 'emailRecipients',     value: params.EmailId_for_Notification),
+                                                  string(name: 'SourceHost',       value: params.DEV_Environment_URL),
+                                                  string(name: 'SourceUser',      value: params.Username_for_Export),
+                                                  string(name: 'SourcePassword',  value: params.Password_for_Export),
                                                   ])
             }
       }
