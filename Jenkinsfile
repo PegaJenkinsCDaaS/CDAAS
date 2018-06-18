@@ -18,15 +18,14 @@ pipeline {
         mail(subject: "Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}) started", body: """<p>STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p><p>Check console output at "<a href="${env.BUILD_URL}">${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>"</p>""", from: 'pegacdaas@jenkins.com', replyTo: params.EmailId_for_Notification, to: params.EmailId_for_Notification)
         slackSend(channel: 'pegacdaas', message: "Job: '${env.JOB_NAME}' with build number: '${env.BUILD_NUMBER}' started")
       }
-    }
-    
+    }    
     stage('Checkout') {
           steps ('Checkout Jenkinfile') {
             echo 'Step to Checkout Jenkinfile'
           }
-          steps ('Checkout Build script') {
-            echo 'Step to Checkout Build script'
-          }
+          //steps ('Checkout Build script') {
+            //echo 'Step to Checkout Build script'
+          //}
     }
     stage('Validation') {      
         stage('Unit tests') {
@@ -98,14 +97,14 @@ pipeline {
             echo 'Step to execute Selenium tests'
           }
 	    }
-            stage('Finalize') {
-              steps {
-                echo 'Step to notify and perform cleanup tasks'
-                mail(subject: "Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}) completed", body: """<p>COMPLETED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p><p>Check console output at "<a href="${env.BUILD_URL}">${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>"</p>""", from: 'pegacdaas@jenkins.com', replyTo: params.EmailId_for_Notification, to: params.EmailId_for_Notification)
-                slackSend(channel: 'pegacdaas', message: "Job: '${env.JOB_NAME}' with build number: '${env.BUILD_NUMBER}' completed")
-              }
-            }
+        stage('Finalize') {
+          steps {
+            echo 'Step to notify and perform cleanup tasks'
+            mail(subject: "Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}) completed", body: """<p>COMPLETED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p><p>Check console output at "<a href="${env.BUILD_URL}">${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>"</p>""", from: 'pegacdaas@jenkins.com', replyTo: params.EmailId_for_Notification, to: params.EmailId_for_Notification)
+            slackSend(channel: 'pegacdaas', message: "Job: '${env.JOB_NAME}' with build number: '${env.BUILD_NUMBER}' completed")
           }
+        }
+      }
 	  parameters {
 	    string(name: 'DEV_Environment_URL', defaultValue: 'http://34.235.52.21:8780', description: 'URL containing protocol, hostname and port number for Development environment')
 	    string(name: 'TST_Environment_URL', defaultValue: 'http://34.235.52.21:8790', description: 'URL containing protocol, hostname and port number for Test environment')
