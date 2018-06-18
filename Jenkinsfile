@@ -20,14 +20,9 @@ pipeline {
       }
     }    
     stage('Checkout') {
-          steps{
-          	steps ('Checkout Jenkinfile') {
-            	echo 'Step to Checkout Jenkinfile'
-	          }
-          steps ('Checkout Build script') {
-            echo 'Step to Checkout Build script'
-          }
-        } 
+      steps ('Checkout Build script') {
+        echo 'Step to Checkout Build script'
+      }
     }
     stage('Validation') {      
         steps ('Unit test') {
@@ -106,7 +101,7 @@ pipeline {
         }
       }
 	  parameters {
-	    string(name: 'DEV_Environment_URL', defaultValue: 'http://34.235.52.21:8780', description: 'URL containing protocol, hostname and port number for Development environment')
+	    string(name: 'DEV_Environment_URL', defaultValue: 'http://ansiblepegaproj2.westeurope.cloudapp.azure.com', description: 'URL containing protocol, hostname and port number for Development environment')
 	    string(name: 'TST_Environment_URL', defaultValue: 'http://34.235.52.21:8790', description: 'URL containing protocol, hostname and port number for Test environment')
 	    string(name: 'ACC_Environment_URL', defaultValue: 'http://52.70.2.153:8780', description: 'URL containing protocol, hostname and port number for Acceptance environment')
 	    string(name: 'PRD_Environment_URL', defaultValue: 'http://52.70.2.153:8790', description: 'URL containing protocol, hostname and port number for Production environment')
@@ -115,9 +110,9 @@ pipeline {
 	    string(name: 'ProductVersion_for_Export', defaultValue: '01.01.02', description: 'Version number of the Product rule')
 	    string(name: 'Application_name_for_Export', defaultValue: 'HRServices', description: 'Name of application for Export')
 	    string(name: 'Application_version_for_Export', defaultValue: '01.01.01', description: 'Version number of application for Export')
-	    string(name: 'Username_for_Export', defaultValue: 'ExportImport@HRServices', description: 'Pega operator id used for Export')
-	    string(name: 'Password_for_Export', defaultValue: 'PegaCDaaS', description: 'Pega operator password used for Export')
-	    string(name: 'EmailId_for_Notification', defaultValue: 'titto.t@hcl.com', description: 'Email address used to notify status of deployment')
+	    string(name: 'Username_for_Export', defaultValue: 'hbagalk', description: 'Pega operator id used for Export')
+	    string(name: 'Password_for_Export', defaultValue: 'rules', description: 'Pega operator password used for Export')
+	    string(name: 'EmailId_for_Notification', defaultValue: 'ajit.s@hcl.com', description: 'Email address used to notify status of deployment')
 	    string(name: 'Application_List_for_Validation', defaultValue: 'HCLEnterprise', description: 'Application List For Compliance Score Check')
 	    string(name: 'Compliance_Threshold', defaultValue: '90', description: 'Compliance Threshold for an Application')
 	  }
