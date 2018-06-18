@@ -1,7 +1,7 @@
 <project name="ExportImport" basedir="." default="exportprops">
     <target name="exportprops" >
 		<property environment="env" />
-		<delete file="scripts\utils\${env.SystemName}_export.properties"/>
+		<!--<delete file="scripts\utils\${env.SystemName}_export.properties"/>-->
         <propertyfile file="scripts\utils\${env.SystemName}_export.properties">
 			<entry  key="${env.SystemName}.pega.rest.server.url" value="${env.SourceHost}/prweb/PRRestService/"/>
 			<entry  key="${env.SystemName}.pega.rest.username" value="${env.SourceUser}"/>
