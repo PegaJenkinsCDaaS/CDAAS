@@ -16,7 +16,7 @@ pipeline {
         echo "Value of Application List: ${params.Application_List_for_Validation}"
         echo "Value of Application List: ${params.Compliance_Threshold}"
         mail(subject: "Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}) started", body: """<p>STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p><p>Check console output at "<a href="${env.BUILD_URL}">${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>"</p>""", from: 'pegacdaas@jenkins.com', replyTo: params.EmailId_for_Notification, to: params.EmailId_for_Notification)
-        slackSend(channel: 'pegacdaas', message: "Job: '${env.JOB_NAME}' with build number: '${env.BUILD_NUMBER}' started")
+        //slackSend(channel: 'pegacdaas', message: "Job: '${env.JOB_NAME}' with build number: '${env.BUILD_NUMBER}' started")
       }
     }    
     stage('Checkout') {
@@ -90,7 +90,7 @@ pipeline {
           steps {
             echo 'Step to notify and perform cleanup tasks'
             mail(subject: "Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}) completed", body: """<p>COMPLETED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p><p>Check console output at "<a href="${env.BUILD_URL}">${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>"</p>""", from: 'pegacdaas@jenkins.com', replyTo: params.EmailId_for_Notification, to: params.EmailId_for_Notification)
-            slackSend(channel: 'pegacdaas', message: "Job: '${env.JOB_NAME}' with build number: '${env.BUILD_NUMBER}' completed")
+            //slackSend(channel: 'pegacdaas', message: "Job: '${env.JOB_NAME}' with build number: '${env.BUILD_NUMBER}' completed")
           }
         }
       }
