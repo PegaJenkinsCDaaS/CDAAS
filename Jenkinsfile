@@ -21,7 +21,7 @@ pipeline {
     }    
     stage('Checkout') {
       steps ('Checkout Build script') {
-        echo 'Step to Checkout Build script'
+        checkout scm
       }
     }
     stage('Validation') {      
@@ -32,16 +32,10 @@ pipeline {
     stage('Export from DEV') {
       steps {
         echo 'Step to export deployment archive from DEV environment'
-        build(job: 'Pega_Export', parameters: [
-                                              string(name: 'productName',         value: params.ProductName_for_Export),
-                                              string(name: 'productVersion',      value: params.ProductVersion_for_Export),
-                                              string(name: 'applicationName',     value: params.Application_name_for_Export),
-                                              string(name: 'applicationVersion',  value: params.Application_version_for_Export),
-                                              string(name: 'pegaSourceURL',       value: params.DEV_Environment_URL),
-                                              string(name: 'pegaSourceUser',      value: params.Username_for_Export),
-                                              string(name: 'pegaSourcePassword',  value: params.Password_for_Export),
-                                              string(name: 'emailRecipients',     value: params.EmailId_for_Notification),
-                                              ])
+        script {
+              sh 'ant -buildfile scripts/samples/jenkins/Jenkins-build.xml exportprops' 
+              sh 'scripts/utils/prpcServiceUtils.sh export --connPropFile ${SystemName}_export.properties --artifactsDir .'
+            }
         }
       }
       stage('Publish to Artifactory') {
@@ -115,5 +109,13 @@ pipeline {
 	    string(name: 'EmailId_for_Notification', defaultValue: 'ajit.s@hcl.com', description: 'Email address used to notify status of deployment')
 	    string(name: 'Application_List_for_Validation', defaultValue: 'HCLEnterprise', description: 'Application List For Compliance Score Check')
 	    string(name: 'Compliance_Threshold', defaultValue: '90', description: 'Compliance Threshold for an Application')
+	    string(name: 'productName',         value: params.ProductName_for_Export)
+	      string(name: 'productVersion',      value: params.ProductVersion_for_Export)
+	      string(name: 'applicationName',     value: params.Application_name_for_Export)
+	      string(name: 'applicationVersion',  value: params.Application_version_for_Export)
+	      string(name: 'pegaSourceURL',       value: params.DEV_Environment_URL)
+	      string(name: 'pegaSourceUser',      value: params.Username_for_Export)
+	      string(name: 'pegaSourcePassword',  value: params.Password_for_Export)
+	      string(name: 'emailRecipients',     value: params.EmailId_for_Notification)
 	  }
 	}
