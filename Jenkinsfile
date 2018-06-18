@@ -44,13 +44,17 @@ pipeline {
 		}
       steps {
         echo 'Step to export deployment archive from DEV environment'
-        script {
-        		sh 'export JAVA_HOME=/usr/lib/java-1.8.0'
-        		sh 'chmod -R +x /var/lib/jenkins/workspace/Pega_CI_CD/scripts/*'
-              //sh 'ant -buildfile scripts/samples/jenkins/Jenkins-build.xml exportprops' 
-              sh 'scripts/utils/prpcServiceUtils.sh export --connPropFile ${SystemName}_export.properties --artifactsDir .'
+        build(job: 'Pega_Export', parameters: [
+                                                  string(name: 'productName',         value: params.ProductName_for_Export),
+                                                  string(name: 'productVersion',      value: params.ProductVersion_for_Export),
+                                                  string(name: 'applicationName',     value: params.Application_name_for_Export),
+                                                  string(name: 'applicationVersion',  value: params.Application_version_for_Export),
+                                                  string(name: 'pegaSourceURL',       value: params.DEV_Environment_URL),
+                                                  string(name: 'pegaSourceUser',      value: params.Username_for_Export),
+                                                  string(name: 'pegaSourcePassword',  value: params.Password_for_Export),
+                                                  string(name: 'emailRecipients',     value: params.EmailId_for_Notification),
+                                                  ])
             }
-        }
       }
       stage('Publish to Artifactory') {
         steps {
