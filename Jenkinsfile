@@ -44,7 +44,7 @@ pipeline {
       steps {
         echo 'Step to export deployment archive from DEV environment'
         script {
-        
+        		sh 'chmod -R +x /var/lib/jenkins/workspace/Pega_CI_CD/scripts/utils/*'
               sh 'scripts/utils/prpcServiceUtils.sh export --connPropFile ${SystemName}_export.properties --artifactsDir .'
               sh 'ant -buildfile scripts/samples/jenkins/Jenkins-build.xml exportprops' 
               echo "${SystemName}"
