@@ -30,6 +30,17 @@ pipeline {
           }
     }
     stage('Export from DEV') {
+    
+	  environment {
+			SystemName ="$BUILD_TAG"
+			ImportExistingInstances = "override"
+			SourceHost="http://ansiblepegaproj2.westeurope.cloudapp.azure.com"
+			SourceUser = "hbagalk"
+			SourcePassword = "rules"
+			TargetHost = "http://localhost:8080"
+			TargetUser = "hbagalk"
+			TargetPassword = "rules" 
+		}
       steps {
         echo 'Step to export deployment archive from DEV environment'
         script {
