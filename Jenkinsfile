@@ -40,6 +40,7 @@ pipeline {
 			TargetHost = "http://localhost:8080"
 			TargetUser = "hbagalk"
 			TargetPassword = "rules" 
+			JAVA_HOME = "/usr/lib/java-1.8.0"
 		}
       steps {
         echo 'Step to export deployment archive from DEV environment'
