@@ -27,6 +27,7 @@ pipeline {
     stage('Validation') {      
         steps ('Unit test') {
             echo 'Step to execute Selenium tests'
+        build(job: 'Pega_Test')
           }
     }
     stage('Export from DEV') {
