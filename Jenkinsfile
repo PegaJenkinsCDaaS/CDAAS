@@ -67,8 +67,8 @@ pipeline {
 	                                              string(name: 'applicationName',     value: params.Application_name_for_Export),
 	                                              string(name: 'applicationVersion',  value: params.Application_version_for_Export),
 	                                              string(name: 'TargetHost',       value: params.TST_Environment_URL),
-	                                              string(name: 'TargetUser',      value: params.Username_for_Export),
-	                                              string(name: 'TargetPassword',  value: params.Password_for_Export),
+	                                              string(name: 'TargetUser',      value: params.Username_for_Import),
+	                                              string(name: 'TargetPassword',  value: params.Password_for_Import),
 	                                              ])
                                                   
                }
