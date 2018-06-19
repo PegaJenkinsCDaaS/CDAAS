@@ -27,7 +27,9 @@ pipeline {
     stage('Validation') {      
         steps ('Unit test') {
             echo 'Step to execute Selenium tests'
-        build(job: 'Pega_Test')
+        build(job: 'Pega_Test', parameters: [
+                                                  string(name: 'sourceURL',         value: 'http://ansiblepegaproj2.westeurope.cloudapp.azure.com/prweb'),
+                                                  ])
           }
     }
     stage('Export from DEV') {
