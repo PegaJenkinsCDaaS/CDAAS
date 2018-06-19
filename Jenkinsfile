@@ -28,8 +28,8 @@ pipeline {
         steps ('Unit test') {
             echo 'Step to execute Selenium tests'
         build(job: 'Pega_Test', parameters: [
-                                                  string(name: 'sourceURL',         value: 'http://ansiblepegaproj2.westeurope.cloudapp.azure.com/prweb'),
-                                                  ])
+                                              string(name: 'sourceURL',         value: 'http://ansiblepegaproj2.westeurope.cloudapp.azure.com/prweb'),
+                                              ])
           }
     }
     stage('Export from DEV') {
@@ -49,49 +49,37 @@ pipeline {
       stage('Publish to Artifactory') {
         steps {
           echo 'Step to upload deployment archive to Artifactory'
-          build(job: 'Artifactory_Upload', parameters: [
-                                                        string(name: 'applicationName',     value: params.Application_name_for_Export),
-                                                        string(name: 'applicationVersion',  value: params.Application_version_for_Export),
-                                                        string(name: 'emailRecipients',     value: params.EmailId_for_Notification),
-                                                        ])
-          }
+           build(job: 'Artifactory_Upload')  
         }
+       }
         stage('Fetch from Artifactory') {
           steps {
-            script {
-              artifactoryUploadBuildNumber = readFile('/var/lib/jenkins/workspace/Artifactory_Upload/artifactoryUploadBuildNumber.txt').trim()
-            }
-            
             echo 'Step to fetch deployment archive from Artifactory'
-            echo "Artifactory upload build number in Stage Fetch from Artifactory is : ${artifactoryUploadBuildNumber}"
-            build(job: 'Artifactory_Download', parameters: [
-                                                            string(name: 'applicationName',               value: params.Application_name_for_Export),
-                                                            string(name: 'applicationVersion',            value: params.Application_version_for_Export),
-                                                            string(name: 'productVersion',                value: params.ProductVersion_for_Export),
-                                                            string(name: 'downloadFilePattern',           value: 'pega_dev_cdaas/artifactory'),
-                                                            string(name: 'artifactoryUploadBuildNumber',  value: "${artifactoryUploadBuildNumber}")
-                                                            ])
+            build(job: 'Artifactory_Download')
             }
           }
           stage('Deploy to TEST') {
             steps {
               echo 'Step to perform deployment to TEST environment'
-              build(job: 'Pega_Import', parameters: [
-                                                     string(name: 'productName',         value: params.ProductName_for_Export),
-                                                     string(name: 'productVersion',      value: params.ProductVersion_for_Export),
-                                                     string(name: 'applicationName',     value: params.Application_name_for_Export),
-                                                     string(name: 'applicationVersion',  value: params.Application_version_for_Export),
-                                                     string(name: 'pegaSourceURL',       value: params.TST_Environment_URL),
-                                                     string(name: 'pegaSourceUser',      value: params.Username_for_Export),
-                                                     string(name: 'pegaSourcePassword',  value: params.Password_for_Export),
-                                                     string(name: 'emailRecipients',     value: params.EmailId_for_Notification),
-                                                     ])
-              }
-            }
+	        build(job: 'Pega_Export', parameters: [
+	                                              string(name: 'productName',         value: params.ProductName_for_Export),
+	                                              string(name: 'productVersion',      value: params.ProductVersion_for_Export),
+	                                              string(name: 'applicationName',     value: params.Application_name_for_Export),
+	                                              string(name: 'applicationVersion',  value: params.Application_version_for_Export),
+	                                              string(name: 'TargetHost',       value: params.TST_Environment_URL),
+	                                              string(name: 'TargetUser',      value: params.Username_for_Export),
+	                                              string(name: 'TargetPassword',  value: params.Password_for_Export),
+	                                              ])
+                                                  
+               }
             
 	    stage('Regression Test') { 
           steps {
-            echo 'Step to execute Selenium tests'
+            echo 'Step to execute Selenium tests'              
+	        build(job: 'Pega_Test', parameters: [
+                                                  string(name: 'sourceURL',         value: 'http://pegasystems.westeurope.cloudapp.azure.com/prweb'),
+                                                  ])
+              }
           }
 	    }
         stage('Finalize') {
@@ -104,7 +92,7 @@ pipeline {
       }
 	  parameters {
 	    string(name: 'DEV_Environment_URL', defaultValue: 'http://ansiblepegaproj2.westeurope.cloudapp.azure.com', description: 'URL containing protocol, hostname and port number for Development environment')
-	    string(name: 'TST_Environment_URL', defaultValue: 'http://34.235.52.21:8790', description: 'URL containing protocol, hostname and port number for Test environment')
+	    string(name: 'TST_Environment_URL', defaultValue: 'http://pegasystems.westeurope.cloudapp.azure.com', description: 'URL containing protocol, hostname and port number for Test environment')
 	    string(name: 'ACC_Environment_URL', defaultValue: 'http://52.70.2.153:8780', description: 'URL containing protocol, hostname and port number for Acceptance environment')
 	    string(name: 'PRD_Environment_URL', defaultValue: 'http://52.70.2.153:8790', description: 'URL containing protocol, hostname and port number for Production environment')
 	    string(name: 'AccessGroup_for_AUT', defaultValue: 'HRServices:Administrators', description: 'Access group used for Automated unit')
@@ -114,6 +102,8 @@ pipeline {
 	    string(name: 'Application_version_for_Export', defaultValue: '01.01.01', description: 'Version number of application for Export')
 	    string(name: 'Username_for_Export', defaultValue: 'hbagalk', description: 'Pega operator id used for Export')
 	    string(name: 'Password_for_Export', defaultValue: 'rules', description: 'Pega operator password used for Export')
+	    string(name: 'Username_for_Import', defaultValue: 'administrator@pega.com', description: 'Pega operator id used for Import')
+	    string(name: 'Password_for_Import', defaultValue: 'install', description: 'Pega operator password used for Import')
 	    string(name: 'EmailId_for_Notification', defaultValue: 'ajit.s@hcl.com', description: 'Email address used to notify status of deployment')
 	    string(name: 'Application_List_for_Validation', defaultValue: 'HCLEnterprise', description: 'Application List For Compliance Score Check')
 	    string(name: 'Compliance_Threshold', defaultValue: '90', description: 'Compliance Threshold for an Application')
