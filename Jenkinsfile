@@ -72,6 +72,7 @@ pipeline {
 	                                              ])
                                                   
                }
+            }
             
 	    stage('Regression Test') { 
           steps {
@@ -80,7 +81,6 @@ pipeline {
                                                   string(name: 'sourceURL',         value: 'http://pegasystems.westeurope.cloudapp.azure.com/prweb'),
                                                   ])
               }
-          }
 	    }
         stage('Finalize') {
           steps {
