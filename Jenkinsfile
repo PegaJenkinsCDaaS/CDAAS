@@ -61,7 +61,7 @@ pipeline {
           stage('Deploy to TEST') {
             steps {
               echo 'Step to perform deployment to TEST environment'
-	        build(job: 'Pega_Export', parameters: [
+	        build(job: 'Pega_Import', parameters: [
 	                                              string(name: 'productName',         value: params.ProductName_for_Export),
 	                                              string(name: 'productVersion',      value: params.ProductVersion_for_Export),
 	                                              string(name: 'applicationName',     value: params.Application_name_for_Export),
