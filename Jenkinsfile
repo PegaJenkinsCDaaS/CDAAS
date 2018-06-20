@@ -15,7 +15,7 @@ pipeline {
         echo "Value of EmailId_for_Notification: ${params.EmailId_for_Notification}"
         echo "Value of Application List: ${params.Application_List_for_Validation}"
         echo "Value of Application List: ${params.Compliance_Threshold}"
-        //mail(subject: "Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}) started", body: """<p>STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p><p>Check console output at "<a href="${env.BUILD_URL}">${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>"</p>""", from: 'pegacdaas@jenkins.com', replyTo: params.EmailId_for_Notification, to: params.EmailId_for_Notification)
+        mail(subject: "Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}) started", body: """<p>STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p><p>Check console output at "<a href="${env.BUILD_URL}">${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>"</p>""", from: 'pegacdaas@jenkins.com', replyTo: params.EmailId_for_Notification, to: params.EmailId_for_Notification)
         //slackSend(channel: 'pegacdaas', message: "Job: '${env.JOB_NAME}' with build number: '${env.BUILD_NUMBER}' started")
       }
     }    
@@ -104,7 +104,7 @@ pipeline {
 	    string(name: 'Password_for_Export', defaultValue: 'rules', description: 'Pega operator password used for Export')
 	    string(name: 'Username_for_Import', defaultValue: 'administrator@pega.com', description: 'Pega operator id used for Import')
 	    string(name: 'Password_for_Import', defaultValue: 'install', description: 'Pega operator password used for Import')
-	    string(name: 'EmailId_for_Notification', defaultValue: 'ajit.s@hcl.com', description: 'Email address used to notify status of deployment')
+	    string(name: 'EmailId_for_Notification', defaultValue: 'titto.t@hcl.com', description: 'Email address used to notify status of deployment')
 	    string(name: 'Application_List_for_Validation', defaultValue: 'HCLEnterprise', description: 'Application List For Compliance Score Check')
 	    string(name: 'Compliance_Threshold', defaultValue: '90', description: 'Compliance Threshold for an Application')
 	    string(name: 'productName',         defaultValue: 'params.ProductName_for_Export')
