@@ -28,7 +28,7 @@ pipeline {
         steps ('Unit test') {
             echo 'Step to execute Selenium tests'
         build(job: 'Pega_Test', parameters: [
-                                              string(name: 'sourceURL',         value: 'http://ansiblepegaproj2.westeurope.cloudapp.azure.com/prweb'),
+                                              string(name: 'sourceURL',         value: params.Dev_Test_URL),
                                               ])
           }
     }
@@ -78,7 +78,7 @@ pipeline {
           steps {
             echo 'Step to execute Selenium tests'              
 	        build(job: 'Pega_Test', parameters: [
-                                                  string(name: 'sourceURL',         value: 'http://pegasystems.westeurope.cloudapp.azure.com/prweb'),
+                                                  string(name: 'sourceURL',         value: params.sourceURL),
                                                   ])
               }
 	    }
@@ -91,11 +91,7 @@ pipeline {
         }
       }
 	  parameters {
-	    string(name: 'DEV_Environment_URL', defaultValue: 'http://ansiblepegaproj2.westeurope.cloudapp.azure.com', description: 'URL containing protocol, hostname and port number for Development environment')
-	    string(name: 'TST_Environment_URL', defaultValue: 'http://pegasystems.westeurope.cloudapp.azure.com', description: 'URL containing protocol, hostname and port number for Test environment')
-	    string(name: 'ACC_Environment_URL', defaultValue: 'http://52.70.2.153:8780', description: 'URL containing protocol, hostname and port number for Acceptance environment')
-	    string(name: 'PRD_Environment_URL', defaultValue: 'http://52.70.2.153:8790', description: 'URL containing protocol, hostname and port number for Production environment')
-	    string(name: 'AccessGroup_for_AUT', defaultValue: 'HRServices:Administrators', description: 'Access group used for Automated unit')
+	  	string(name: 'AccessGroup_for_AUT', defaultValue: 'HRServices:Administrators', description: 'Access group used for Automated unit')
 	    string(name: 'ProductName_for_Export', defaultValue: 'HRServices', description: 'Name of the Rule-Admin-Product rule to be used for Export from Development environment')
 	    string(name: 'ProductVersion_for_Export', defaultValue: '01.01.02', description: 'Version number of the Product rule')
 	    string(name: 'Application_name_for_Export', defaultValue: 'HRServices', description: 'Name of application for Export')
